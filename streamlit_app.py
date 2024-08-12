@@ -5,9 +5,9 @@ import plotly.graph_objs as go
 import requests
 
 # User Input for Stock Ticker
-
 STOCK = st.text_input('Enter the stock name', 'GOOG')
-st.text("Enter(.bo) for indian stocks")
+st.text("Enter(.bo) for Indian stocks")
+
 if False:
     print("error")
 else:
@@ -76,7 +76,7 @@ if 'stock_data' in locals() and not stock_data.empty:
 
     # Display Dynamic Candlestick Chart
     st.subheader(f'Candlestick Chart ({time_frame})')
-    st.plotly_chart(plot_candlestick(filtered_data))
+    st.plotly_chart(plot_candlestick(filtered_data), use_container_width=True)
 
     # Function to Plot Moving Averages
     def plot_moving_averages(data):
@@ -95,7 +95,7 @@ if 'stock_data' in locals() and not stock_data.empty:
 
     # Display Moving Averages
     st.subheader('Moving Averages')
-    st.plotly_chart(plot_moving_averages(stock_data))
+    st.plotly_chart(plot_moving_averages(stock_data), use_container_width=True)
 
     # Function to Plot Bollinger Bands
     def plot_bollinger_bands(data):
@@ -116,7 +116,7 @@ if 'stock_data' in locals() and not stock_data.empty:
 
     # Display Bollinger Bands
     st.subheader('Bollinger Bands')
-    st.plotly_chart(plot_bollinger_bands(stock_data))
+    st.plotly_chart(plot_bollinger_bands(stock_data), use_container_width=True)
 
     # Function to Plot Volume
     def plot_volume(data):
@@ -126,6 +126,6 @@ if 'stock_data' in locals() and not stock_data.empty:
 
     # Display Trading Volume
     st.subheader('Trading Volume')
-    st.plotly_chart(plot_volume(stock_data))
+    st.plotly_chart(plot_volume(stock_data), use_container_width=True)
 else:
     st.warning("Stock data is not available.")
