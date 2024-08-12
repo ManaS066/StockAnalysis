@@ -8,6 +8,16 @@ import requests
 STOCK = st.text_input('Enter the stock name', 'GOOG')
 st.text("Enter(.bo) for Indian stocks")
 
+# Include Custom CSS
+st.markdown("""
+<style>
+.custom-chart-container {
+    width: 1000px; /* Set your desired width */
+    margin: auto; /* Center the chart */
+}
+</style>
+""", unsafe_allow_html=True)
+
 if False:
     print("error")
 else:
@@ -76,7 +86,9 @@ if 'stock_data' in locals() and not stock_data.empty:
 
     # Display Dynamic Candlestick Chart
     st.subheader(f'Candlestick Chart ({time_frame})')
-    st.plotly_chart(plot_candlestick(filtered_data), use_container_width=True)
+    st.markdown('<div class="custom-chart-container">', unsafe_allow_html=True)
+    st.plotly_chart(plot_candlestick(filtered_data), use_container_width=False)  # Turn off container width
+    st.markdown('</div>', unsafe_allow_html=True)
 
     # Function to Plot Moving Averages
     def plot_moving_averages(data):
@@ -95,7 +107,9 @@ if 'stock_data' in locals() and not stock_data.empty:
 
     # Display Moving Averages
     st.subheader('Moving Averages')
-    st.plotly_chart(plot_moving_averages(stock_data), use_container_width=True)
+    st.markdown('<div class="custom-chart-container">', unsafe_allow_html=True)
+    st.plotly_chart(plot_moving_averages(stock_data), use_container_width=False)  # Turn off container width
+    st.markdown('</div>', unsafe_allow_html=True)
 
     # Function to Plot Bollinger Bands
     def plot_bollinger_bands(data):
@@ -116,7 +130,9 @@ if 'stock_data' in locals() and not stock_data.empty:
 
     # Display Bollinger Bands
     st.subheader('Bollinger Bands')
-    st.plotly_chart(plot_bollinger_bands(stock_data), use_container_width=True)
+    st.markdown('<div class="custom-chart-container">', unsafe_allow_html=True)
+    st.plotly_chart(plot_bollinger_bands(stock_data), use_container_width=False)  # Turn off container width
+    st.markdown('</div>', unsafe_allow_html=True)
 
     # Function to Plot Volume
     def plot_volume(data):
@@ -126,6 +142,8 @@ if 'stock_data' in locals() and not stock_data.empty:
 
     # Display Trading Volume
     st.subheader('Trading Volume')
-    st.plotly_chart(plot_volume(stock_data), use_container_width=True)
+    st.markdown('<div class="custom-chart-container">', unsafe_allow_html=True)
+    st.plotly_chart(plot_volume(stock_data), use_container_width=False)  # Turn off container width
+    st.markdown('</div>', unsafe_allow_html=True)
 else:
     st.warning("Stock data is not available.")
