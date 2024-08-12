@@ -19,7 +19,7 @@ else:
         else:
             stock_data.columns = ['open', 'high', 'low', 'close', 'adj close', 'volume']
             stock_data = stock_data.drop('adj close', axis=1)
-            st.subheader("Stock Data")
+            st.subheader(f"{STOCK} Data")
             st.write(stock_data.iloc[-20:].iloc[::-1])  # Reverse the data to show the most recent first
     except Exception as e:
         st.error(f"Failed to retrieve data from Yahoo Finance: {e}")
