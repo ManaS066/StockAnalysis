@@ -170,7 +170,7 @@ if 'stock_data' in locals() and not stock_data.empty:
         fig.add_trace(go.Scatter(x=data.index, y=data['close'], mode='lines', name='Close Price'))
         fig.add_trace(go.Bar(x=data.index, y=data['volume'], name='Volume', marker_color='orange', yaxis='y2'))
 
-       fig.update_layout(
+        fig.update_layout(
             title='Price and Volume Correlation',
             xaxis_title='Date',
             yaxis_title='Close Price',
