@@ -167,8 +167,20 @@ if 'stock_data' in locals() and not stock_data.empty:
 
     # Function to Plot Volume
     def plot_volume(data):
+        min_volume = data['volume'].min()
+        max_volume = data['volume'].max()
+        padding = (max_volume - min_volume) * 0.1  # 10% padding for better visualization
+
         fig = go.Figure(data=[go.Bar(x=data.index, y=data['volume'], marker_color='orange')])
-        fig.update_layout(title='Trading Volume', xaxis_title='Date', yaxis_title='Volume')
+
+    # Update layout with dynamic y-axis range
+        fig.update_layout(
+            title='Trading Volume',
+            xaxis_title='Date',
+            yaxis_title='Volume',
+            yaxis=dict(range=[min_volume - padding, max_volume + padding]),  # Set y-axis range dynamically
+            template='plotly_white'  # Optional: Set a white theme for better readability
+        )
         return fig
 
     # Display Trading Volume
