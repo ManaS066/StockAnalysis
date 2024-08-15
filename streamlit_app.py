@@ -4,25 +4,8 @@ import yfinance as yf
 import plotly.graph_objs as go
 import requests
 
-
-def get_ticker_from_company_name(company_name):
-    base_url = f'https://www.alphavantage.co/query'
-    params = {
-        'function': 'SYMBOL_SEARCH',
-        'keywords': company_name,
-        'apikey': "ODABEKY6TCO9WBCV"
-    }
-    response = requests.get(base_url, params=params)
-    data = response.json()
-    
-    # Extract the best match (if available)
-    if 'bestMatches' in data and data['bestMatches']:
-        best_match = data['bestMatches'][0]
-        return best_match['1. symbol']
-    else:
-        return "Ticker not found"
 # User Input for Stock Ticker
-STOCK = get_ticker_from_company_name(st.text_input('Enter the stock name', 'google'))
+STOCK = st.text_input('Enter the stock name', 'GOOG')
 st.text("Enter(.bo) for Indian stocks")
 
 # Include Custom CSS
@@ -56,7 +39,7 @@ else:
             ticker = yf.Ticker(STOCK)
             company_info = ticker.info
             company_name = company_info.get('longName', 'Unknown Company Name')  # Fetch company name from info
-            st.subheader(f"Company: {company_name}")
+    st.subheader(f"Company: {company_name}")
             st.write(stock_data.iloc[-20:].iloc[::-1])  # Reverse the data to show the most recent first
     except Exception as e:
         st.error(f"Failed to retrieve data from Yahoo Finance: {e}")
