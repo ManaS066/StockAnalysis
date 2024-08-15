@@ -29,6 +29,13 @@ else:
         else:
             stock_data.columns = ['open', 'high', 'low', 'close', 'adj close', 'volume']
             stock_data = stock_data.drop('adj close', axis=1)
+            # Ensure moving averages are calculated
+            if 'MA_50' not in stock_data.columns:
+                stock_data['MA_50'] = stock_data['close'].rolling(window=50).mean()
+
+            if 'MA_200' not in stock_data.columns:
+                stock_data['MA_200'] = stock_data['close'].rolling(window=200).mean()
+
             st.subheader(f"{STOCK} Data")
             st.write(stock_data.iloc[-20:].iloc[::-1])  # Reverse the data to show the most recent first
     except Exception as e:
@@ -91,19 +98,23 @@ if 'stock_data' in locals() and not stock_data.empty:
     st.markdown('</div>', unsafe_allow_html=True)
 
     # Function to Plot Moving Averages
-    def plot_moving_averages(data):
-        data['MA_50'] = data['close'].rolling(window=50).mean()
-        data['MA_100'] = data['close'].rolling(window=100).mean()
-        data['MA_200'] = data['close'].rolling(window=200).mean()
-        
-        fig = go.Figure()
-        fig.add_trace(go.Scatter(x=data.index, y=data['close'], mode='lines', name='Close Price'))
+    def plot_moving_average(data, ma_type):
+    fig = go.Figure()
+
+    # Plot the Close Price
+    fig.add_trace(go.Scatter(x=data.index, y=data['close'], mode='lines', name='Close Price'))
+
+    # Check if the required moving average column exists
+    if ma_type == 'Short-Term (50-Day MA)' and 'MA_50' in data.columns:
         fig.add_trace(go.Scatter(x=data.index, y=data['MA_50'], mode='lines', name='50-Day MA'))
-        fig.add_trace(go.Scatter(x=data.index, y=data['MA_100'], mode='lines', name='100-Day MA'))
+    elif ma_type == 'Long-Term (200-Day MA)' and 'MA_200' in data.columns:
         fig.add_trace(go.Scatter(x=data.index, y=data['MA_200'], mode='lines', name='200-Day MA'))
-        
-        fig.update_layout(title='Moving Averages', xaxis_title='Date', yaxis_title='Price')
-        return fig
+    else:
+        st.error(f"{ma_type} data is not available.")
+
+    fig.update_layout(title=f'Moving Averages - {ma_type}', xaxis_title='Date', yaxis_title='Price')
+    return fig
+
 
     # Display Moving Averages
     st.subheader('Moving Averages')
