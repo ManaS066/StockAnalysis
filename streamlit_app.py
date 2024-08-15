@@ -100,15 +100,21 @@ if 'stock_data' in locals() and not stock_data.empty:
 
         # Function to plot moving averages
     def plot_moving_average(data, ma_type):
-            fig = go.Figure()
-            fig.add_trace(go.Scatter(x=data.index, y=data['Close'], mode='lines', name='Close Price'))
-            if ma_type == 'Short-Term (50-Day MA)':
-                fig.add_trace(go.Scatter(x=data.index, y=data['MA_50'], mode='lines', name='50-Day MA'))
-            elif ma_type == 'Long-Term (200-Day MA)':
-                fig.add_trace(go.Scatter(x=data.index, y=data['MA_200'], mode='lines', name='200-Day MA'))
-            fig.update_layout(title=f'Moving Averages - {ma_type}', xaxis_title='Date', yaxis_title='Price')
-            return fig
+        fig = go.Figure()
 
+        # Plot the Close Price
+        fig.add_trace(go.Scatter(x=data.index, y=data['close'], mode='lines', name='Close Price'))
+
+        # Plot the selected moving average
+        if ma_type == 'Short-Term (50-Day MA)':
+            fig.add_trace(go.Scatter(x=data.index, y=data['MA_50'], mode='lines', name='50-Day MA'))
+        elif ma_type == 'Long-Term (200-Day MA)':
+            fig.add_trace(go.Scatter(x=data.index, y=data['MA_200'], mode='lines', name='200-Day MA'))
+
+        fig.update_layout(title=f'Moving Averages - {ma_type}', xaxis_title='Date', yaxis_title='Price')
+        return fig
+
+    # Display the selected moving average chart
     st.plotly_chart(plot_moving_average(stock_data, ma_option))
 
 
