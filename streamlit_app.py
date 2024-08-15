@@ -5,8 +5,25 @@ import plotly.graph_objs as go
 import requests
 
 # User Input for Stock Ticker
-STOCK = st.text_input('Enter the stock name', 'GOOG')
+STOCK = get_ticker_from_company_name(st.text_input('Enter the stock name', 'google'))
 st.text("Enter(.bo) for Indian stocks")
+
+def get_ticker_from_company_name(company_name):
+    base_url = f'https://www.alphavantage.co/query'
+    params = {
+        'function': 'SYMBOL_SEARCH',
+        'keywords': company_name,
+        'apikey': "ODABEKY6TCO9WBCV"
+    }
+    response = requests.get(base_url, params=params)
+    data = response.json()
+    
+    # Extract the best match (if available)
+    if 'bestMatches' in data and data['bestMatches']:
+        best_match = data['bestMatches'][0]
+        return best_match['1. symbol']
+    else:
+        return "Ticker not found"
 
 # Include Custom CSS
 st.markdown("""
