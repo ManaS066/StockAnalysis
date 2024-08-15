@@ -4,9 +4,6 @@ import yfinance as yf
 import plotly.graph_objs as go
 import requests
 
-# User Input for Stock Ticker
-STOCK = get_ticker_from_company_name(st.text_input('Enter the stock name', 'google'))
-st.text("Enter(.bo) for Indian stocks")
 
 def get_ticker_from_company_name(company_name):
     base_url = f'https://www.alphavantage.co/query'
@@ -24,6 +21,9 @@ def get_ticker_from_company_name(company_name):
         return best_match['1. symbol']
     else:
         return "Ticker not found"
+# User Input for Stock Ticker
+STOCK = get_ticker_from_company_name(st.text_input('Enter the stock name', 'google'))
+st.text("Enter(.bo) for Indian stocks")
 
 # Include Custom CSS
 st.markdown("""
