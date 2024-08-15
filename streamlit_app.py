@@ -147,7 +147,6 @@ if 'stock_data' in locals() and not stock_data.empty:
     st.markdown('<div class="custom-chart-container">', unsafe_allow_html=True)
     st.plotly_chart(plot_bollinger_bands(stock_data), use_container_width=False)  # Turn off container width
     st.markdown('</div>', unsafe_allow_html=True)
-
     def plot_macd(data):
     # Calculate MACD
         short_ema = data['close'].ewm(span=12, adjust=False).mean()
@@ -160,19 +159,16 @@ if 'stock_data' in locals() and not stock_data.empty:
         fig.add_trace(go.Scatter(x=data.index, y=macd_line, mode='lines', name='MACD Line'))
         fig.add_trace(go.Scatter(x=data.index, y=signal_line, mode='lines', name='Signal Line'))
         fig.add_trace(go.Bar(x=data.index, y=histogram, name='MACD Histogram', marker_color='gray'))
-    
         fig.update_layout(title='MACD (Moving Average Convergence Divergence)', xaxis_title='Date', yaxis_title='MACD')
-    return fig
-
-# Display MACD
+        return fig
     st.subheader('MACD (Moving Average Convergence Divergence)')
     st.plotly_chart(plot_macd(stock_data))
 
+    
     def plot_price_volume_correlation(data):
         fig = go.Figure()
         fig.add_trace(go.Scatter(x=data.index, y=data['close'], mode='lines', name='Close Price'))
         fig.add_trace(go.Bar(x=data.index, y=data['volume'], name='Volume', marker_color='orange', yaxis='y2'))
-
         fig.update_layout(
             title='Price and Volume Correlation',
             xaxis_title='Date',
@@ -186,8 +182,8 @@ if 'stock_data' in locals() and not stock_data.empty:
         return fig
 
 # Display Price and Volume Correlation
-st.subheader('Price and Volume Correlation')
-st.plotly_chart(plot_price_volume_correlation(stock_data))
+    st.subheader('Price and Volume Correlation')
+    st.plotly_chart(plot_price_volume_correlation(stock_data))
 
 
     # Function to Plot Volume
