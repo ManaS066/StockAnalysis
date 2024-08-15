@@ -23,7 +23,7 @@ if False:
 else:
     # Fetch data from Yahoo Finance
     try:
-        stock_data = yf.download(STOCK, period="3y")  # Download last 5 years of data
+        stock_data = yf.download(STOCK, period="2y")  # Download last 2 years of data
         if stock_data.empty:
             st.error("No data found for the entered stock symbol.")
         else:
