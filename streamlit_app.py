@@ -29,8 +29,13 @@ else:
         else:
             stock_data.columns = ['open', 'high', 'low', 'close', 'adj close', 'volume']
             stock_data = stock_data.drop('adj close', axis=1)
-            stock_data['MA_50'] = stock_data['Close'].rolling(window=50).mean()
-            stock_data['MA_200'] = stock_data['Close'].rolling(window=200).mean()
+            # Ensure moving averages are calculated
+            if 'MA_50' not in stock_data.columns:
+                stock_data['MA_50'] = stock_data['close'].rolling(window=50).mean()
+
+            if 'MA_200' not in stock_data.columns:
+                  stock_data['MA_200'] = stock_data['close'].rolling(window=200).mean()
+
             st.subheader(f"{STOCK} Data")
             st.write(stock_data.iloc[-20:].iloc[::-1])  # Reverse the data to show the most recent first
     except Exception as e:
