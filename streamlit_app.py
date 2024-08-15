@@ -164,31 +164,6 @@ if 'stock_data' in locals() and not stock_data.empty:
     st.subheader('MACD (Moving Average Convergence Divergence)')
     st.plotly_chart(plot_macd(stock_data))
 
-    
-    def plot_price_volume_correlation(data):
-        fig = go.Figure()
-        fig.add_trace(go.Scatter(x=data.index, y=data['close'], mode='lines', name='Close Price'))
-        fig.add_trace(go.Bar(x=data.index, y=data['volume'], name='Volume', marker_color='orange', yaxis='y2'))
-
-        fig.update_layout(
-            title='Price and Volume Correlation',
-            xaxis_title='Date',
-            yaxis_title='Close Price',
-            yaxis2=dict(
-                title='Volume',
-                overlaying='y',
-                side='right'
-                ),
-            template='plotly_white'
-            )
-
-        return fig
-
-
-# Display Price and Volume Correlation
-    st.subheader('Price and Volume Correlation')
-    st.plotly_chart(plot_price_volume_correlation(stock_data))
-
 
     # Function to Plot Volume
     def plot_volume(data):
