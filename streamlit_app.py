@@ -104,6 +104,11 @@ if 'stock_data' in locals() and not stock_data.empty:
         )
 
         # Function to plot moving averages
+      # Display Moving Averages
+    st.subheader('Moving Averages')
+    st.markdown('<div class="custom-chart-container">', unsafe_allow_html=True)
+    st.plotly_chart(plot_moving_averages(stock_data), use_container_width=False)  # Turn off container width
+    st.markdown('</div>', unsafe_allow_html=True)
     def plot_moving_average(data, ma_type):
         fig = go.Figure()
 
@@ -123,11 +128,7 @@ if 'stock_data' in locals() and not stock_data.empty:
     st.plotly_chart(plot_moving_average(stock_data, ma_option))
 
 
-    # Display Moving Averages
-    st.subheader('Moving Averages')
-    st.markdown('<div class="custom-chart-container">', unsafe_allow_html=True)
-    st.plotly_chart(plot_moving_averages(stock_data), use_container_width=False)  # Turn off container width
-    st.markdown('</div>', unsafe_allow_html=True)
+  
 
     # Function to Plot Bollinger Bands
     def plot_bollinger_bands(data):
