@@ -93,10 +93,6 @@ if 'stock_data' in locals() and not stock_data.empty:
 
     # Display Dynamic Candlestick Chart
     st.subheader(f'Candlestick Chart ({time_frame})')
-    st.markdown('<div class="custom-chart-container">', unsafe_allow_html=True)
-    st.plotly_chart(plot_candlestick(filtered_data), use_container_width=False)  # Turn off container width
-    st.markdown('</div>', unsafe_allow_html=True)
-
     # Function to Plot Moving Averages
     ma_option = st.radio(
             "Select Moving Average to Display:",
