@@ -36,7 +36,10 @@ else:
             if 'MA_200' not in stock_data.columns:
                 stock_data['MA_200'] = stock_data['close'].rolling(window=200).mean()
 
-            st.subheader(f"{STOCK} Data")
+            ticker = yf.Ticker(STOCK)
+            company_info = ticker.info
+            company_name = company_info.get('longName', 'Unknown Company Name')  # Fetch company name from info
+    st.subheader(f"Company: {company_name}")
             st.write(stock_data.iloc[-20:].iloc[::-1])  # Reverse the data to show the most recent first
     except Exception as e:
         st.error(f"Failed to retrieve data from Yahoo Finance: {e}")
