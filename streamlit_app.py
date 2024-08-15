@@ -29,6 +29,8 @@ else:
         else:
             stock_data.columns = ['open', 'high', 'low', 'close', 'adj close', 'volume']
             stock_data = stock_data.drop('adj close', axis=1)
+            stock_data['MA_50'] = stock_data['Close'].rolling(window=50).mean()
+            stock_data['MA_200'] = stock_data['Close'].rolling(window=200).mean()
             st.subheader(f"{STOCK} Data")
             st.write(stock_data.iloc[-20:].iloc[::-1])  # Reverse the data to show the most recent first
     except Exception as e:
@@ -91,19 +93,24 @@ if 'stock_data' in locals() and not stock_data.empty:
     st.markdown('</div>', unsafe_allow_html=True)
 
     # Function to Plot Moving Averages
-    def plot_moving_averages(data):
-        data['MA_50'] = data['close'].rolling(window=50).mean()
-        data['MA_100'] = data['close'].rolling(window=100).mean()
-        data['MA_200'] = data['close'].rolling(window=200).mean()
-        
-        fig = go.Figure()
-        fig.add_trace(go.Scatter(x=data.index, y=data['close'], mode='lines', name='Close Price'))
-        fig.add_trace(go.Scatter(x=data.index, y=data['MA_50'], mode='lines', name='50-Day MA'))
-        fig.add_trace(go.Scatter(x=data.index, y=data['MA_100'], mode='lines', name='100-Day MA'))
-        fig.add_trace(go.Scatter(x=data.index, y=data['MA_200'], mode='lines', name='200-Day MA'))
-        
-        fig.update_layout(title='Moving Averages', xaxis_title='Date', yaxis_title='Price')
-        return fig
+    ma_option = st.radio(
+            "Select Moving Average to Display:",
+            ('Short-Term (50-Day MA)', 'Long-Term (200-Day MA)')
+        )
+
+        # Function to plot moving averages
+    def plot_moving_average(data, ma_type):
+            fig = go.Figure()
+            fig.add_trace(go.Scatter(x=data.index, y=data['Close'], mode='lines', name='Close Price'))
+            if ma_type == 'Short-Term (50-Day MA)':
+                fig.add_trace(go.Scatter(x=data.index, y=data['MA_50'], mode='lines', name='50-Day MA'))
+            elif ma_type == 'Long-Term (200-Day MA)':
+                fig.add_trace(go.Scatter(x=data.index, y=data['MA_200'], mode='lines', name='200-Day MA'))
+            fig.update_layout(title=f'Moving Averages - {ma_type}', xaxis_title='Date', yaxis_title='Price')
+            return fig
+
+    st.plotly_chart(plot_moving_average(stock_data, ma_option))
+
 
     # Display Moving Averages
     st.subheader('Moving Averages')
