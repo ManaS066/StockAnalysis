@@ -39,8 +39,10 @@ else:
             ticker = yf.Ticker(STOCK)
             company_info = ticker.info
             company_name = company_info.get('longName', 'Unknown Company Name')  # Fetch company name from info
+            net_worth = company_info.get('networth')
             st.subheader(f"Company: {company_name}")
             st.write(stock_data.iloc[-20:].iloc[::-1])  # Reverse the data to show the most recent first
+            st.subheader(f"NetWorth: {net_worth}")
     except Exception as e:
         st.error(f"Failed to retrieve data from Yahoo Finance: {e}")
 
