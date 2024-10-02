@@ -3,8 +3,17 @@ import pandas as pd
 import yfinance as yf
 import plotly.graph_objs as go
 import requests
-
+import numpy as np
 # User Input for Stock Ticker
+
+selected_page = st.sidebar.radio(
+    "STOCK PREDICTION",
+    ("Home", "Analysis", "Predict", "Login")
+)
+
+# Using "with" notation
+# 
+
 STOCK = st.text_input('Enter the stock name', 'GOOG')
 st.text("Enter(.bo) for Indian stocks")
 
@@ -29,7 +38,7 @@ else:
         else:
             stock_data.columns = ['open', 'high', 'low', 'close', 'adj close', 'volume']
             stock_data = stock_data.drop('adj close', axis=1)
-            # Ensure moving averages are calculated
+                        # Ensure moving averages are calculated
             if 'MA_50' not in stock_data.columns:
                 stock_data['MA_50'] = stock_data['close'].rolling(window=50).mean()
 
@@ -193,5 +202,6 @@ if 'stock_data' in locals() and not stock_data.empty:
     st.markdown('<div class="custom-chart-container">', unsafe_allow_html=True)
     st.plotly_chart(plot_volume(stock_data), use_container_width=False)  # Turn off container width
     st.markdown('</div>', unsafe_allow_html=True)
+
 else:
     st.warning("Stock data is not available.")
