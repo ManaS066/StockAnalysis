@@ -6,6 +6,16 @@ import requests
 import numpy as np
 # User Input for Stock Ticker
 
+import os
+
+
+# Set the cache directory to a known path
+cache_dir = '/path/to/your/accessible/cache/dir'
+if not os.path.exists(cache_dir):
+    os.makedirs(cache_dir)
+
+yf.pdr_override()  # Optional if you want to override Pandas DataReader
+
 selected_page = st.sidebar.radio(
     "STOCK PREDICTION",
     ("Home", "Analysis", "Predict", "Login")
