@@ -13,6 +13,17 @@ from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, LSTM
 from datetime import datetime, timedelta
+
+import os
+
+
+# Set the cache directory to a known path
+cache_dir = '/path/to/your/accessible/cache/dir'
+if not os.path.exists(cache_dir):
+    os.makedirs(cache_dir)
+
+yf.pdr_override()  # Optional if you want to override Pandas DataReader
+
 # Function to validate email
 def is_valid_email(email):
     # Basic email validation using regular expression
