@@ -3,7 +3,7 @@ import re
 import numpy as np
 import streamlit as st
 import pandas as pd
-import yfinance as yf
+
 import plotly.graph_objs as go
 import numpy as np
 import pandas as pd
@@ -16,13 +16,15 @@ from datetime import datetime, timedelta
 
 import os
 
+# 🔧 Set a valid, writable cache dir
+os.environ["YFINANCE_CACHE_DIR"] = "/tmp/yf_cache"
+if not os.path.exists("/tmp/yf_cache"):
+    os.makedirs("/tmp/yf_cache")
 
-# Set the cache directory to a known path
-cache_dir = '/path/to/your/accessible/cache/dir'
-if not os.path.exists(cache_dir):
-    os.makedirs(cache_dir)
+# ✅ Now safe to import yfinance
+import yfinance as yf
 
-yf.pdr_override()  # Optional if you want to override Pandas DataReader
+
 
 # Function to validate email
 def is_valid_email(email):
