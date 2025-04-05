@@ -16,13 +16,11 @@ from datetime import datetime, timedelta
 
 import os
 
-# 🔧 Set a valid, writable cache dir
-os.environ["YFINANCE_CACHE_DIR"] = "/tmp/yf_cache"
-if not os.path.exists("/tmp/yf_cache"):
-    os.makedirs("/tmp/yf_cache")
+# Make sure the yfinance cache directory exists
+os.makedirs("/home/appuser/.cache/py-yfinance", exist_ok=True)
 
-# ✅ Now safe to import yfinance
 import yfinance as yf
+
 
 
 
