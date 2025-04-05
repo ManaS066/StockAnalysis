@@ -7,7 +7,7 @@ import pandas as pd
 import plotly.graph_objs as go
 import numpy as np
 import pandas as pd
-import yfinance as yf
+
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import MinMaxScaler
 from tensorflow.keras.models import Sequential
@@ -15,6 +15,11 @@ from tensorflow.keras.layers import Dense, LSTM
 from datetime import datetime, timedelta
 
 import os
+
+# Set writable cache directory
+os.environ["YFINANCE_CACHE_DIR"] = "./.cache/py-yfinance"
+os.makedirs(os.environ["YFINANCE_CACHE_DIR"], exist_ok=True)
+
 
 import yfinance as yf
 
