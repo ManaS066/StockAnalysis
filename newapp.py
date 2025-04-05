@@ -16,9 +16,6 @@ from datetime import datetime, timedelta
 
 import os
 
-# Make sure the yfinance cache directory exists
-os.makedirs("/home/appuser/.cache/py-yfinance", exist_ok=True)
-
 import yfinance as yf
 
 
